@@ -1,3 +1,4 @@
-const myName = "Thar Htet Aung";
+const name = require ('sillyname')
+const myName = name();
 
-console.log(myName);
+console.log(myName)

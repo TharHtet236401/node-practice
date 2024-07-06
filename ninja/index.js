@@ -1,18 +1,18 @@
-const {people,jobs} = require("./people");
-const fs = require("fs");
-console.log(jobs);
+// const {people,jobs} = require("./people");
+// const fs = require("fs");
+// console.log(jobs);
 
 
 
-reader = fs.ReadStream('./ninja/blog2.txt');
-writer = fs.WriteStream('./ninja/blog5.txt');
+// reader = fs.ReadStream('./ninja/blog2.txt');
+// writer = fs.WriteStream('./ninja/blog5.txt');
 
 // reader.on('data',(chunk)=>{
 //     console.log(chunk.toString())
 //     writer.write(chunk)
 // })
 
-reader.pipe(writer);
+// reader.pipe(writer);
 
 
 // fs.readFile("./ninja/blog.txt",(err,data)=>{
@@ -52,3 +52,43 @@ reader.pipe(writer);
 // })
 
 
+const http = require("http");
+const fs = require("fs");
+
+const server = http.createServer((req,res)=>{
+   
+    res.statusCode = 300;
+
+    res.setHeader('Content-Type', 'text/html')
+    console.log(res)
+
+    path = "./assets/"
+    switch(req.url){
+        case '/':
+            path+="index.html";
+            break;
+        case "/about":
+            path+="about.html";
+            break;
+        case "/help":
+            path+="help.html";
+            break;
+        default:
+            path+="error.html"
+    }
+
+    fs.readFile(path,(err,data)=>{
+        if (err){
+            res.end()
+        }
+        else{
+            res.write(data);
+            res.end()
+        }
+    })
+    
+})
+
+server.listen(3000,"localhost",()=>{
+    console.log("listening the request from port 3000 and edited")
+})
